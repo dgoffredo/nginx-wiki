@@ -51,12 +51,15 @@ ngx_add_timer
           my_timer.handler = ngx_timer_fired;
           my_timer.log = cycle->log;
           my_timer.data = &dumb_con;
-          dumb.fd = (ngx_socket_t) -1;
+          dumb_con.fd = (ngx_socket_t) -1;
+          
+          ngx_add_timer(&my_timer, 5000);
       }
 
       void ngx_timer_fired(ngx_event_t *ev)
       {
           ngx_log_error(NGX_LOG_DEBUG, ev->log, 0, "Event fired!");
+          assert(ev == &my_timer);
       }
 
 ngx_del_timer
